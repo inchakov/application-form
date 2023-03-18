@@ -1,10 +1,13 @@
 import fastify from 'fastify'
 import { Config } from './config'
-import { register as registerHealthStatus } from './handlers/health-status'
+import { useHealthStatus } from './handlers/health-status'
+import { useApplicationApi } from './handlers/application-api'
+
 
 const server = fastify()
 
-registerHealthStatus('/health-status', server)
+useHealthStatus('/health-status', server)
+useApplicationApi('/api/application', server)
 
 server.listen({ port: Config.port }, (err, address) => {
     if (err) {

@@ -19,15 +19,16 @@ export const ApplicationSchema = Type.Intersect([
     })
 ])
 
-export type PartialApplication = Partial<Application>;
-export const PartialApplicationSchema = {
-    ...PartialSchema(ApplicationSchema),
-    vehicles: Type.Array(PartialSchema(VehicleSchema), { minItems: 0, maxItems: MaxVehicles }),
-}
-
-function PartialSchema(schema: TObject) {
-    return {
-        ...schema,
-        required: []
-    }
-}
+export type PartialApplication = Static<typeof PartialApplicationSchema>;
+export const PartialApplicationSchema = Type.Partial(
+    Type.Intersect([
+        PersonSchema,
+        AddressSchema,
+        Type.Partial(
+            Type.Object({
+                vehicles: Type.Array(VehicleSchema, { minItems: 1, maxItems: MaxVehicles }),
+                additionalPeople: Type.Array(AdditionalPersonSchema, { minItems: 0, maxItems: MaxPeople }),
+            }
+        ))
+    ])
+)
