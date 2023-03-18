@@ -1,12 +1,12 @@
 import { Type } from "@sinclair/typebox";
-import { FastifyInstance } from "fastify";
+import { FastifyPluginAsync } from "fastify";
 import { PartialApplication, PartialApplicationSchema } from "../model/application";
 import { ErrorMessageSchema } from "../model/error-message";
 import { Uid, UidSchema } from "../model/uid";
 
-export function useApplicationDataApi(prefix: string, server: FastifyInstance) {
+export const applicationDataApi: FastifyPluginAsync = async (server) => { 
 
-    server.post<{ Body: PartialApplication }>(`${prefix}`, {
+    server.post<{ Body: PartialApplication }>('', {
         schema: {
             body: PartialApplicationSchema
         }
@@ -16,7 +16,7 @@ export function useApplicationDataApi(prefix: string, server: FastifyInstance) {
         reply.redirect(`/app/${applicationUid}`)
     })
 
-    server.get<{ Params: Uid }>(`${prefix}/:uid`, {
+    server.get<{ Params: Uid }>('/:uid', {
         schema: {
             params: UidSchema,
             response: {
@@ -32,7 +32,7 @@ export function useApplicationDataApi(prefix: string, server: FastifyInstance) {
     server.put<{
         Params: Uid,
         Body: PartialApplication
-    }>(`${prefix}/:uid`, {
+    }>('/:uid', {
         schema: {
             params: UidSchema,
             body: PartialApplicationSchema,

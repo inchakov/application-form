@@ -1,20 +1,17 @@
-import fastify from 'fastify'
 import { Config } from './config'
-import { useHealthStatus } from './handlers/health-status'
-import { useApplicationDataApi } from './handlers/application-data-api'
-import { useApplicationCalculatorApi } from './handlers/application-calculator-api'
+import { createServer } from './create-server'
 
+async function start() {
 
-const server = fastify()
+    const server = await createServer();
 
-useHealthStatus('api/health-status', server)
-useApplicationDataApi('/api/application', server)
-useApplicationCalculatorApi('/api/application/calculate', server)
+    server.listen({ port: Config.port }, (err, address) => {
+        if (err) {
+            console.error(err)
+            process.exit(1)
+        }
+        console.log(`Server listening at ${address}`)
+    })
+}
 
-server.listen({ port: Config.port }, (err, address) => {
-    if (err) {
-        console.error(err)
-        process.exit(1)
-    }
-    console.log(`Server listening at ${address}`)
-})
+start();

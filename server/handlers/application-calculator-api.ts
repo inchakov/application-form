@@ -1,10 +1,10 @@
-import { FastifyInstance } from "fastify";
+import { FastifyPluginAsync } from "fastify";
 import { Application, ApplicationSchema } from "../model/application"
 import { ApplicationPriceSchema } from "../model/application-price"
 
-export function useApplicationCalculatorApi(prefix: string, server: FastifyInstance) {
+export const applicationCalculatorApi: FastifyPluginAsync = async (server) => { 
     
-    server.post<{ Body: Application }>(prefix, {
+    server.post<{ Body: Application }>('', {
         schema: {
             body: ApplicationSchema,
             response: {

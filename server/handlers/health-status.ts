@@ -1,8 +1,8 @@
-import { FastifyInstance } from "fastify";
+import { FastifyPluginAsync } from "fastify";
 
-export function useHealthStatus(prefix: string, server: FastifyInstance) {
+export const healthStatus: FastifyPluginAsync = async (server) => { 
 
-    server.get(prefix, async () => {
+    server.get('', async () => {
         return {
             status: 'OK',
             version: process.env.npm_package_version
