@@ -1,14 +1,10 @@
 import fastify from 'fastify'
 import { Config } from './config'
+import { register as registerHealthStatus } from './handlers/health-status'
 
 const server = fastify()
 
-server.get('/health-status', async (request, reply) => {
-    return {
-        status: 'OK',
-        version: process.env.npm_package_version
-    }
-})
+registerHealthStatus('/health-status', server)
 
 server.listen({ port: Config.port }, (err, address) => {
     if (err) {
