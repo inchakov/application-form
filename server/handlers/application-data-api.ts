@@ -1,11 +1,10 @@
 import { Type } from "@sinclair/typebox";
 import { FastifyInstance } from "fastify";
-import { Application, ApplicationSchema, PartialApplication, PartialApplicationSchema } from "../model/application";
-import { ApplicationPriceSchema } from "../model/application-price";
+import { PartialApplication, PartialApplicationSchema } from "../model/application";
 import { ErrorMessageSchema } from "../model/error-message";
 import { Uid, UidSchema } from "../model/uid";
 
-export function useApplicationApi(prefix: string, server: FastifyInstance) {
+export function useApplicationDataApi(prefix: string, server: FastifyInstance) {
 
     server.post<{ Body: PartialApplication }>(`${prefix}`, {
         schema: {
@@ -45,17 +44,5 @@ export function useApplicationApi(prefix: string, server: FastifyInstance) {
     }, async (request, reply) => {
         // TODO Update db record
         return 'OK'
-    })
-
-    server.post<{ Body: Application }>(`${prefix}/calculate`, {
-        schema: {
-            body: ApplicationSchema,
-            response: {
-                200: ApplicationPriceSchema,
-            }
-        }
-    }, async (request) => {
-        const application = request.body
-        return { price: Math.round(Math.random()*5000) }
     })
 }

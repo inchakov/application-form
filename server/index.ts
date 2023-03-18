@@ -1,13 +1,15 @@
 import fastify from 'fastify'
 import { Config } from './config'
 import { useHealthStatus } from './handlers/health-status'
-import { useApplicationApi } from './handlers/application-api'
+import { useApplicationDataApi } from './handlers/application-data-api'
+import { useApplicationCalculatorApi } from './handlers/application-calculator-api'
 
 
 const server = fastify()
 
-useHealthStatus('/health-status', server)
-useApplicationApi('/api/application', server)
+useHealthStatus('api/health-status', server)
+useApplicationDataApi('/api/application', server)
+useApplicationCalculatorApi('/api/application/calculate', server)
 
 server.listen({ port: Config.port }, (err, address) => {
     if (err) {
