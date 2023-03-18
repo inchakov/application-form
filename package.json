@@ -4,11 +4,14 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev server"
+    "dev": "ts-node-dev server/"
   },
   "author": "Aleksey Inchakov",
   "license": "ISC",
   "devDependencies": {
     "ts-node-dev": "^2.0.0"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.25.24"
   }
 }
