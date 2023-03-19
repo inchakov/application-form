@@ -1,12 +1,16 @@
+import "reflect-metadata"
 import { DataSource } from "typeorm";
-import { Application } from "./application-entity";
+import { ApplicationEntity } from "./application-entity";
 
 const dataSource = new DataSource({
     type: 'sqlite',
-    database: 'data.db'
+    database: 'data.db',
+    entities: [ApplicationEntity],
+    logging: true,
+    synchronize: true,
 })
 
-const applicationRepository = dataSource.getRepository(Application)
+const applicationRepository = dataSource.getRepository(ApplicationEntity)
 
 let dataSourceInitialized = false
 

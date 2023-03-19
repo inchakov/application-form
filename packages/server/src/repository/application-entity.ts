@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryColumn, Upda
 import { PartialApplication } from "../model/application";
 
 @Entity("AP_Application")
-export class Application {
+export class ApplicationEntity {
 
     @PrimaryColumn()
     uid!: string;
