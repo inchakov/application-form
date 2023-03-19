@@ -1,18 +1,20 @@
 import { Type } from "@sinclair/typebox";
 import { FastifyPluginAsync } from "fastify";
+import { useApplicationDataRepository } from "../hooks/use-application-data-repository";
 import { PartialApplication, PartialApplicationSchema } from "../model/application";
 import { ErrorMessageSchema } from "../model/error-message";
 import { Uid, UidSchema } from "../model/uid";
 
 export const applicationDataApi: FastifyPluginAsync = async (server) => { 
 
+    const { createApplication, getApplication, saveApplication } = useApplicationDataRepository()
+
     server.post<{ Body: PartialApplication }>('', {
         schema: {
             body: PartialApplicationSchema
         }
     }, async (request, reply) => {
-        // TODO Create db record and redirect to the new application
-        const applicationUid = '123'
+        const applicationUid: string = await createApplication(request.body)
         reply.redirect(`/app/${applicationUid}`)
     })
 
@@ -25,8 +27,8 @@ export const applicationDataApi: FastifyPluginAsync = async (server) => {
             }
         }
     }, async (request) => {
-        // TODO Get db record
-        return { firstName: 'John', lastName: 'Doe' }
+        const application: PartialApplication = await getApplication(request.params.uid)
+        return application
     })
 
     server.put<{
@@ -41,8 +43,8 @@ export const applicationDataApi: FastifyPluginAsync = async (server) => {
                 404: ErrorMessageSchema
             }
         }
-    }, async (request, reply) => {
-        // TODO Update db record
+    }, async (request) => {
+        saveApplication(request.params.uid, request.body)
         return 'OK'
     })
 }
