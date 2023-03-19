@@ -1,18 +1,21 @@
 {
   "name": "hugo-challenge",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/server/index.js",
   "scripts": {
-    "dev": "ts-node-dev server/"
+    "dev": "ts-node-dev src/server/",
+    "build": "tsc"
   },
   "author": "Aleksey Inchakov",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.15.3",
+    "lerna": "^6.5.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.2"
   },
   "dependencies": {
+    "@fastify/static": "^6.9.0",
     "@sinclair/typebox": "^0.25.24",
     "dotenv": "^16.0.3",
     "fastify": "^4.14.1"
@@ -26,5 +29,8 @@
     "url": "https://github.com/inchakov/hugo-challenge/issues"
   },
   "homepage": "https://github.com/inchakov/hugo-challenge#readme",
-  "description": ""
+  "description": "",
+  "workspaces": [
+    "packages/*"
+  ]
 }
