@@ -20,7 +20,7 @@ function App() {
         </Form.Group>
         <Form.Group className="application-input-group" controlId='dateOfBirth'>
           <Form.Label>Date of Birth</Form.Label>
-          <Form.Control type='Date' />
+          <Form.Control type='Date' max='2007-03-19'/>
           <Form.Control.Feedback type='invalid'></Form.Control.Feedback>
         </Form.Group>
       </Form>
