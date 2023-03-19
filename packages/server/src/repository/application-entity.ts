@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
-import { PartialApplication } from "../model/application";
+import { PartialApplication } from "../../../common/model/application";
 
 @Entity("AP_Application")
 export class ApplicationEntity {

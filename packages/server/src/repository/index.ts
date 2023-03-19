@@ -1,10 +1,11 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm";
+import { Config } from "../config";
 import { ApplicationEntity } from "./application-entity";
 
 const dataSource = new DataSource({
     type: 'sqlite',
-    database: 'data.db',
+    database: Config.dbPath,
     entities: [ApplicationEntity],
     logging: true,
     synchronize: true,
