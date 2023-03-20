@@ -1,8 +1,8 @@
 import React from "react";
 import Form from "react-bootstrap/esm/Form";
 import { UseFormReturn } from "react-hook-form";
-import { States } from "../data/us-states";
-import { PartialApplication } from "../shared/model/application";
+import { States } from "../../data/us-states";
+import { PartialApplication } from "../../shared/model/application";
 
 export default function ApplicationAddress(
     props: UseFormReturn<PartialApplication>

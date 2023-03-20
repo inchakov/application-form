@@ -1,4 +1,4 @@
-import { Static, TObject, Type } from "@sinclair/typebox";
+import { Static, Type } from "@sinclair/typebox";
 import { PersonSchema } from "./person";
 import { AddressSchema } from "./address";
 import { VehicleSchema } from "./vehicle";

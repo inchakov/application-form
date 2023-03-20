@@ -1,7 +1,7 @@
 import React from "react";
 import Form from "react-bootstrap/esm/Form";
 import { UseFormReturn } from "react-hook-form";
-import { PartialApplication } from "../shared/model/application";
+import { PartialApplication } from "../../shared/model/application";
 
 export default function ApplicationPerson(
     props: UseFormReturn<PartialApplication>

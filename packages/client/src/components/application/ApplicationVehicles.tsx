@@ -1,12 +1,12 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import Form from "react-bootstrap/esm/Form";
 import Row from "react-bootstrap/esm/Row";
 import { UseFormReturn } from "react-hook-form";
-import { Makers, Models } from "../data/cars";
-import { MaxVehicles, PartialApplication } from "../shared/model/application";
-import { MinVehicleYear, VinPattern } from "../shared/model/vehicle";
+import { Makers, Models } from "../../data/cars";
+import { MaxVehicles, PartialApplication } from "../../shared/model/application";
+import { MinVehicleYear, VinPattern } from "../../shared/model/vehicle";
 
 export default function ApplicationVehicles(
     props: UseFormReturn<PartialApplication>
@@ -15,19 +15,22 @@ export default function ApplicationVehicles(
 
     const vehicles = watch('vehicles') ?? [];
 
-    const date = new Date()
-    const years: number[] = [];
-    for (let year = date.getFullYear(); year >= MinVehicleYear; year--) {
-        years.push(year);
-    }
+    const years = useMemo(() => {
+        const date = new Date()
+        const years: number[] = [];
+        for (let year = date.getFullYear(); year >= MinVehicleYear; year--) {
+            years.push(year);
+        }
+        return years;
+    }, []);
 
     const addVehicle = useCallback(() => {
-        const vehicles = getValues('vehicles')!;
+        const vehicles = getValues('vehicles') ?? [];
         setValue('vehicles', [...vehicles, {}]);
     }, [getValues, setValue])
 
     const removeVehicle = useCallback((index: number) => {
-        const vehicles = getValues('vehicles')!;
+        const vehicles = [...getValues('vehicles') ?? []];
         vehicles.splice(index, 1)
         setValue('vehicles', vehicles);
     }, [getValues, setValue])
@@ -46,20 +49,20 @@ export default function ApplicationVehicles(
                             }
                         </Col>
                     </Row>
-                    <Form.Group className='application-input-group' controlId='firstName'>
+                    <Form.Group className='application-input-group' controlId={`vin${index}`}>
                         <Form.Label>VIN</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='4Y1SL65848Z411439'
                             maxLength={17}
                             {...register(`vehicles.${index}.vin`, {
-                                required: 'VIN name is required',
+                                required: 'VIN is required',
                                 pattern: {
                                     value: VinPattern,
                                     message: 'VIN must be 17 characters long'
                                 }
                             })}
-                            isInvalid={!!errors.vehicles?.[index]?.message}
+                            isInvalid={!!errors.vehicles?.[index]?.vin?.message}
                         />
                         <Form.Control.Feedback type='invalid'>{!!errors.vehicles?.[index]?.vin?.message}</Form.Control.Feedback>
                     </Form.Group>

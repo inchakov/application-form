@@ -1,7 +1,6 @@
-import React from 'react';
 import Form from 'react-bootstrap/esm/Form';
 import { useForm } from 'react-hook-form';
-import { PartialApplication } from '../shared/model/application';
+import { PartialApplication } from '../../shared/model/application';
 import Button from 'react-bootstrap/Button';
 import ApplicationPerson from './ApplicationPerson';
 import ApplicationAddress from './ApplicationAddress';
