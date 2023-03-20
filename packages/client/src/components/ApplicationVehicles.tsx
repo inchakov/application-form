@@ -36,7 +36,7 @@ export default function ApplicationVehicles(
         <React.Fragment>
             {vehicles.map((vehicle, index) => (
                 <React.Fragment key={index}>
-                    <Row className='vehicle-input-group'>
+                    <Row className="application-section">
                         <Col>
                             <h2>Vehicle {index + 1}</h2>
                         </Col>

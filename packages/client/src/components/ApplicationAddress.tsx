@@ -11,7 +11,7 @@ export default function ApplicationAddress(
 
     return (
         <React.Fragment>
-            <h2>Address</h2>
+            <h2 className="application-section">Address</h2>
             <Form.Group className='application-input-group' controlId='street'>
                 <Form.Label>Street</Form.Label>
                 <Form.Control

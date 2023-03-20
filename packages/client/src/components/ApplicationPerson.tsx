@@ -13,7 +13,7 @@ export default function ApplicationPerson(
 
     return (
         <React.Fragment>
-            <h2>Personal Information</h2>
+            <h2 className="application-section">Personal Information</h2>
 
             <Form.Group className='application-input-group' controlId='firstName'>
                 <Form.Label>First Name</Form.Label>
