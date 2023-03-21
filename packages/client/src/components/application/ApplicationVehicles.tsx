@@ -3,7 +3,8 @@ import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import Form from "react-bootstrap/esm/Form";
 import Row from "react-bootstrap/esm/Row";
-import { UseFormReturn } from "react-hook-form";
+import { Typeahead } from 'react-bootstrap-typeahead';
+import { UseFormReturn, Controller } from "react-hook-form";
 import { Makers, Models } from "../../data/cars";
 import { MaxVehicles, PartialApplication } from "../../shared/model/application";
 import { MinVehicleYear, VinPattern } from "../../shared/model/vehicle";
@@ -11,7 +12,7 @@ import { MinVehicleYear, VinPattern } from "../../shared/model/vehicle";
 export default function ApplicationVehicles(
     props: UseFormReturn<PartialApplication>
 ) {
-    const { register, setValue, getValues, formState: { errors }, watch } = props;
+    const { register, setValue, getValues, formState: { errors }, watch, control } = props;
 
     const vehicles = watch('vehicles') ?? [];
 
@@ -69,32 +70,52 @@ export default function ApplicationVehicles(
 
                     <Row>
                         <Col>
-                            <Form.Select
-                                isInvalid={!!errors.vehicles?.[index]?.year}
-                                {...register(`vehicles.${index}.year`, { required: true })}
-                            >
-                                <option value=''>Year...</option>
-                                {years.map((year) => (<option key={year} value={year}>{year}</option>))}
-                            </Form.Select>
+                            <Form.Group controlId={`year${index}`}>
+                                <Form.Label>Year</Form.Label>
+                                <Form.Select
+                                    isInvalid={!!errors.vehicles?.[index]?.year}
+                                    {...register(`vehicles.${index}.year`, { required: true })}
+                                >
+                                    <option value=''>Year...</option>
+                                    {years.map((year) => (<option key={year} value={year}>{year}</option>))}
+                                </Form.Select>
+                            </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Select
-                                isInvalid={!!errors.vehicles?.[index]?.make}
-                                {...register(`vehicles.${index}.make`, { required: true })}
-                            >
-                                <option value=''>Maker...</option>
-                                {Makers.map((maker) => (<option key={maker} value={maker}>{maker}</option>))}
-                            </Form.Select>
+                            <Form.Group controlId={`make${index}`}>
+                                <Form.Label>Make</Form.Label>
+                                <Controller
+                                    control={control}
+                                    name={`vehicles.${index}.make`}
+                                    rules={{ required: true }}
+                                    render={({ field }) => (
+                                        <Typeahead
+                                            {...field}
+                                            isInvalid={!!errors.vehicles?.[index]?.make}
+                                            placeholder='Chevrolet'
+                                            options={Makers}
+                                        />
+                                    )}
+                                />
+                            </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Select
-                                disabled={!vehicle.make}
-                                isInvalid={!!errors.vehicles?.[index]?.model}
-                                {...register(`vehicles.${index}.model`, { required: true })}
-                            >
-                                <option value=''>Model...</option>
-                                {(Models[vehicle.make!] ?? []).map((model) => (<option key={model} value={model}>{model}</option>))}
-                            </Form.Select>
+                            <Form.Group controlId={`model${index}`}>
+                                <Form.Label>Model</Form.Label>
+                                <Controller
+                                    control={control}
+                                    name={`vehicles.${index}.model`}
+                                    rules={{ required: true }}
+                                    render={({ field }) => (
+                                        <Typeahead
+                                            {...field}
+                                            isInvalid={!!errors.vehicles?.[index]?.model}
+                                            placeholder='Camaro'
+                                            options={(Models[vehicle.make!] ?? [])}
+                                        />
+                                    )}
+                                />
+                            </Form.Group>
                         </Col>
                     </Row>
                 </React.Fragment>
