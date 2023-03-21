@@ -40,11 +40,14 @@ export default function ApplicationVehicles(
         <React.Fragment>
             {vehicles.map((vehicle, index) => (
                 <React.Fragment key={index}>
-                    <Row className="application-section">
+                    
+                    <hr className="application-section" />
+
+                    <Row>
                         <Col>
                             <h2>Vehicle {index + 1}</h2>
                         </Col>
-                        <Col md='auto'>
+                        <Col xs='auto'>
                             { index > 0 &&
                                 <Button variant='outline-danger' onClick={() => removeVehicle(index)}>Remove</Button>
                             }
@@ -90,6 +93,7 @@ export default function ApplicationVehicles(
                                     rules={{ required: true }}
                                     render={({ field }) => (
                                         <Typeahead
+                                            id={`make-input-${index}`}
                                             {...field}
                                             isInvalid={!!errors.vehicles?.[index]?.make}
                                             placeholder='Chevrolet'
@@ -108,6 +112,7 @@ export default function ApplicationVehicles(
                                     rules={{ required: true }}
                                     render={({ field }) => (
                                         <Typeahead
+                                            id={`model-input-${index}`}
                                             {...field}
                                             isInvalid={!!errors.vehicles?.[index]?.model}
                                             placeholder='Camaro'
@@ -118,13 +123,18 @@ export default function ApplicationVehicles(
                             </Form.Group>
                         </Col>
                     </Row>
+                    
                 </React.Fragment>
             ))}
-
+            
             <div className="add-vehicle-button">
-                { vehicles.length < MaxVehicles &&
-                    <Button variant='outline-secondary' onClick={addVehicle}>Add Vehicle</Button>
-                }
+                <Button
+                    disabled={vehicles.length >= MaxVehicles}
+                    variant='outline-secondary'
+                    onClick={addVehicle}
+                >Add Vehicle</Button>
+                <br/>
+                <Form.Text>Max vehicles count: {MaxVehicles}</Form.Text>
             </div>
 
         </React.Fragment>

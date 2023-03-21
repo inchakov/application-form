@@ -26,14 +26,16 @@ export default function ApplicationDrivers(
 
     return (
         <React.Fragment>
-            {drivers.map((driver, index) => (
+            {drivers.map((_, index) => (
                 <React.Fragment key={index}>
 
-                    <Row className="application-section">
+                    <hr className="application-section" />
+
+                    <Row>
                         <Col>
                             <h2>Additional Driver {index + 1}</h2>
                         </Col>
-                        <Col md='auto'>
+                        <Col xs='auto'>
                             <Button variant='outline-danger' onClick={() => removeDriver(index)}>Remove</Button>
                         </Col>
                     </Row>
@@ -91,9 +93,13 @@ export default function ApplicationDrivers(
             ))}
 
             <div className="add-vehicle-button">
-                {drivers.length < MaxPeople &&
-                    <Button variant='outline-secondary' onClick={addDriver}>Add Driver</Button>
-                }
+                <Button
+                    disabled={drivers.length >= MaxPeople}
+                    variant='outline-secondary'
+                    onClick={addDriver}
+                >Add Driver</Button>
+                <br />
+                <Form.Text>Max additional drivers: {MaxPeople}</Form.Text>
             </div>
 
         </React.Fragment>
