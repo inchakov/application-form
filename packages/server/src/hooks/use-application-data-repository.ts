@@ -1,6 +1,6 @@
-import { PartialApplication } from "../../../common/model/application";
+import { PartialApplication } from "../../../client/src/shared/model/application";
 import { getRepositories as useRepositories } from "../repository";
-import { useApplicationData } from "../../../common/hooks/use-application-data";
+import { useApplicationData } from "../../../client/src/shared/hooks/use-application-data";
 import { v4 as uuid } from "uuid";
 import { NotFound } from "http-errors";
 

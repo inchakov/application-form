@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from "fastify";
-import { Application, ApplicationSchema } from "../../../common/model/application"
-import { ApplicationPriceSchema } from "../../../common/model/application-price"
+import { Application, ApplicationSchema } from "../../../client/src/shared/model//application"
+import { ApplicationPriceSchema } from "../../../client/src/shared/model/application-price"
 
 export const applicationCalculatorApi: FastifyPluginAsync = async (server) => { 
     

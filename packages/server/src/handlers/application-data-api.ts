@@ -1,9 +1,9 @@
 import { Type } from "@sinclair/typebox";
 import { FastifyPluginAsync } from "fastify";
 import { useApplicationDataRepository } from "../hooks/use-application-data-repository";
-import { PartialApplication, PartialApplicationSchema } from "../../../common/model/application";
-import { ErrorMessageSchema } from "../../../common/model/error-message";
-import { Uid, UidSchema } from "../../../common/model/uid";
+import { PartialApplication, PartialApplicationSchema } from "../../../client/src/shared/model/application";
+import { ErrorMessageSchema } from "../../../client/src/shared/model/error-message";
+import { Uid, UidSchema } from "../../../client/src/shared/model/uid";
 
 export const applicationDataApi: FastifyPluginAsync = async (server) => { 
 
