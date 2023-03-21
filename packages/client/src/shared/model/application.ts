@@ -27,7 +27,7 @@ export const PartialApplicationSchema = Type.Partial(
         Type.Partial(
             Type.Object({
                 vehicles: Type.Array(Type.Partial(VehicleSchema), { minItems: 1, maxItems: MaxVehicles }),
-                additionalPeople: Type.Array(AdditionalPersonSchema, { minItems: 0, maxItems: MaxPeople }),
+                additionalPeople: Type.Array(Type.Partial(AdditionalPersonSchema), { minItems: 0, maxItems: MaxPeople }),
             }
         ))
     ])

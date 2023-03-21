@@ -6,6 +6,7 @@ import ApplicationPerson from './ApplicationPerson';
 import ApplicationAddress from './ApplicationAddress';
 import ApplicationVehicles from './ApplicationVehicles';
 import './ApplicationForm.css';
+import ApplicationDrivers from './ApplicationDrivers';
 
 
 export default function ApplicationForm() {
@@ -22,10 +23,14 @@ export default function ApplicationForm() {
         console.log(data);
     }
 
+    const date = new Date()
+    const maxDateOfBirth = new Date(date.getFullYear() - 16, date.getMonth(), date.getDate())
+
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <ApplicationPerson {...form}/>
-            <ApplicationAddress {...form}/>
+            <ApplicationPerson maxDateOfBirth={maxDateOfBirth} {...form}/>
+            <ApplicationAddress {...form} />
+            <ApplicationDrivers maxDateOfBirth={maxDateOfBirth} {...form} />
             <ApplicationVehicles {...form} />
             <Button className='request-price-button' as='input' type='submit' value='Request Price' />
         </Form>

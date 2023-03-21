@@ -4,12 +4,9 @@ import { UseFormReturn } from "react-hook-form";
 import { PartialApplication } from "../../shared/model/application";
 
 export default function ApplicationPerson(
-    props: UseFormReturn<PartialApplication>
+    props: UseFormReturn<PartialApplication> & { maxDateOfBirth: Date }
 ) {
-    const { register, formState: { errors } } = props;
-
-    const date = new Date()
-    const maxDateOfBirth = new Date(date.getFullYear() - 16, date.getMonth(), date.getDate())
+    const { maxDateOfBirth, register, formState: { errors } } = props;
 
     return (
         <React.Fragment>
