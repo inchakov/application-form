@@ -45,7 +45,10 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"pm.collectionVariables.set(\"test_application_uid\", pm.response.json().uid);",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -76,6 +79,46 @@
 			"response": []
 		},
 		{
+			"name": "update application",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Aleksey\",\n    \"lastName\": \"Inchakov\",\n    \"dateOfBirth\": \"1980-11-22\",\n    \"vehicles\": [{}]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}api/application/{{test_application_uid}}",
+					"host": [
+						"{{base_url}}api"
+					],
+					"path": [
+						"application",
+						"{{test_application_uid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "get application",
 			"event": [
 				{
@@ -99,46 +142,6 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}api/application/{{test_application_uid}}",
-					"host": [
-						"{{base_url}}api"
-					],
-					"path": [
-						"application",
-						"{{test_application_uid}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "update application",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"firstName\": \"Aleksey\",\n    \"lastName\": \"Inchakov\",\n    \"dateOfBirth\": \"1980-11-22\",\n    \"vehicles\": [{}]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
