@@ -1,16 +1,16 @@
 import { Type } from "@sinclair/typebox";
 import { FastifyPluginAsync } from "fastify";
-import { useApplicationDataRepository } from "../hooks/use-application-data-repository";
 import { PartialApplication, PartialApplicationSchema } from "../../../client/src/shared/model/application";
 import { ErrorMessageSchema } from "../../../client/src/shared/model/error-message";
 import { ApplicationUid, ApplicationUidSchema } from "../../../client/src/shared/model/application-uid";
 import { ApplicationRouteSchema, ApplicationRoute } from "../../../client/src/shared/model/application-route";
 import { Config } from "../config";
+import { useApplicationDataService } from "../hooks/use-application-data-service";
 
 
 export const applicationDataApi: FastifyPluginAsync = async (server) => { 
 
-    const { createApplication, getApplication, saveApplication } = useApplicationDataRepository()
+    const { createApplication, getApplication, saveApplication } = useApplicationDataService()
 
     server.post<{ Body: PartialApplication }>('', {
         schema: {

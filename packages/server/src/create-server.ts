@@ -6,7 +6,9 @@ import { applicationCalculatorApi } from './handlers/application-calculator-api'
 
 export async function createServer() {
 
-    const server = fastify();
+    const server = fastify({
+        logger: true
+    });
 
     await server.register(healthStatus, { prefix: '/api/status' });
     await server.register(applicationDataApi, { prefix: '/api/application' });

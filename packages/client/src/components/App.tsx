@@ -6,7 +6,7 @@ function App() {
 
   return (
     <Container className='application-container'>
-      <ApplicationForm />
+      <ApplicationForm applicationUid='e8f7d574-5015-41bb-abb0-1e5cb90b071d' />
     </Container>
   );
 }

@@ -1,27 +1,50 @@
 import Form from 'react-bootstrap/esm/Form';
 import { useForm } from 'react-hook-form';
-import { PartialApplication } from '../../shared/model/application';
+import { Application, PartialApplication } from '../../shared/model/application';
 import Button from 'react-bootstrap/Button';
 import ApplicationPerson from './ApplicationPerson';
 import ApplicationAddress from './ApplicationAddress';
 import ApplicationVehicles from './ApplicationVehicles';
 import './ApplicationForm.css';
 import ApplicationDrivers from './ApplicationDrivers';
+import { useApplicationCalculatorApi } from '../../hooks/use-application-calculator-api';
+import { useCallback, useEffect } from 'react';
+import { useApplicationDataApi } from '../../hooks/use-application-data-api';
+import { ApplicationUid } from '../../shared/model/application-uid';
 
 
-export default function ApplicationForm() {
+export default function ApplicationForm(props: ApplicationUid) {
+
+    const { applicationUid } = props;
 
     const form = useForm<PartialApplication>({
         defaultValues: {
             vehicles: [{}]
         }
     })
+    const { handleSubmit, reset } = form;
 
-    const { handleSubmit } = form;
+    const { getApplication } = useApplicationDataApi()
+    const { calculatePrice } = useApplicationCalculatorApi()
 
-    const onSubmit = (data: PartialApplication) => {
-        console.log(data);
-    }
+    useEffect(() => {
+        getApplication(applicationUid)
+            .then(application => {
+                console.log(application)
+                reset(application)
+            })
+            .catch(e => console.error(e))
+    }, [getApplication, reset, applicationUid])
+
+    const onSubmit = useCallback(async (data: PartialApplication) => {
+        try {
+            console.log(data)
+            const results = await calculatePrice(data as Application)
+            console.log(results)
+        } catch (error) {
+            console.error(error)
+        }
+    }, [calculatePrice])
 
     const date = new Date()
     const maxDateOfBirth = new Date(date.getFullYear() - 16, date.getMonth(), date.getDate())

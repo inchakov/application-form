@@ -12,7 +12,7 @@ const applicationDataApi: ApplicationData = {
         const response = await fetch("/api/application", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(initialData),
         });
@@ -28,7 +28,7 @@ const applicationDataApi: ApplicationData = {
         await fetch(`/api/application/${applicationId}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
         });

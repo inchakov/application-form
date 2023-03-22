@@ -4,11 +4,11 @@ import { ApplicationData, useApplicationData } from "../../../client/src/shared/
 import { v4 as uuid } from "uuid";
 import { NotFound } from "http-errors";
 
-export const useApplicationDataRepository: useApplicationData = () => {
-    return applicationDataRepository
+export const useApplicationDataService: useApplicationData = () => {
+    return applicationDataService
 }
 
-const applicationDataRepository: ApplicationData = {
+const applicationDataService: ApplicationData = {
 
     createApplication: async (initialData?: PartialApplication | null) => {
         const { applicationRepository } = await useRepositories();
