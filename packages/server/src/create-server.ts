@@ -1,4 +1,4 @@
-import fastify from 'fastify'
+import fastify, { FastifyInstance } from 'fastify'
 import fastifyStatic from "@fastify/static";
 import { healthStatus } from './handlers/health-status'
 import { applicationDataApi } from './handlers/application-data-api'
@@ -11,11 +11,19 @@ export async function createServer() {
         logger: true
     });
 
+    await registerApiRoutings(server);
+
+    await registerStaticRoutings(server);
+
+    return server;
+}
+
+async function registerApiRoutings(server: FastifyInstance) {
     await server.register(healthStatus, { prefix: '/api/status' });
     await server.register(applicationDataApi, { prefix: '/api/application' });
     await server.register(applicationCalculatorApi, { prefix: '/api/application/calculate' });
+}
 
-    server.register(fastifyStatic, { root: path.join(__dirname, '../../client/build')})
-
-    return server;
+async function registerStaticRoutings(server: FastifyInstance) {
+    await server.register(fastifyStatic, { root: path.join(__dirname, '../../client/build') });
 }
