@@ -1,13 +1,14 @@
 import React from "react";
 import Form from "react-bootstrap/esm/Form";
 import { UseFormReturn } from "react-hook-form";
-import { MinDriverAge, PartialApplication } from "../../shared/model/application";
+import { getMinDateOfBirth, MinDriverAge, PartialApplication } from "../../shared/model/application";
 
 export default function ApplicationPerson(
-    props: UseFormReturn<PartialApplication> & { maxDateOfBirth: Date }
+    props: UseFormReturn<PartialApplication>
 ) {
-    const { maxDateOfBirth, register, formState: { errors } } = props;
-
+    const { register, formState: { errors } } = props;
+    const maxDateOfBirth = getMinDateOfBirth();
+    
     return (
         <React.Fragment>
             <h2 className="application-section">Personal Information</h2>

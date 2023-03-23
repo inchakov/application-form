@@ -13,13 +13,15 @@ const applicationCalculatorService: ApplicationCalculator = {
 
         const minDateOfBirth = getMinDateOfBirth()
 
-        if (new Date(application.dateOfBirth) < minDateOfBirth) {
+        if (new Date(application.dateOfBirth) > minDateOfBirth) {
             throw new BadRequest(`All drivers must be at least ${MinDriverAge} years old`)
         }
 
-        for(const driver of application.additionalPeople) {
-            if (new Date(driver.dateOfBirth) < minDateOfBirth) {
-                throw new BadRequest(`All drivers must be at least ${MinDriverAge} years old`)
+        if (application.additionalPeople) {
+            for (const driver of application.additionalPeople) {
+                if (new Date(driver.dateOfBirth) > minDateOfBirth) {
+                    throw new BadRequest(`All drivers must be at least ${MinDriverAge} years old`)
+                }
             }
         }
 

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm";
 import { useToastContext } from "../components/ToastContextProvider";
+import { useApplicationCalculatorApi } from "../hooks/use-application-calculator-api";
 import { useApplicationDataApi } from "../hooks/use-application-data-api";
 import getErrorMessage from "../shared/getErrorMessage";
-import { PartialApplication } from "../shared/model/application";
+import { Application, PartialApplication } from "../shared/model/application";
 import { ApplicationUid } from "../shared/model/application-uid";
 
 export default function ApplicationContainer() {
@@ -14,6 +15,7 @@ export default function ApplicationContainer() {
     const navigate = useNavigate();
 
     const { getApplication } = useApplicationDataApi();
+    const { calculatePrice } = useApplicationCalculatorApi();
     const [applicationState, setApplication] = useState<PartialApplication>({})
 
     const { showToast } = useToastContext()
@@ -34,7 +36,15 @@ export default function ApplicationContainer() {
         fetchApplication();
     }, [applicationUid, getApplication, navigate, showToast])
 
+    const onRequestPrice = useCallback(async (application: Application) => {
+        const price = await calculatePrice(application)
+        return price
+    }, [calculatePrice])
+
     return (
-        <ApplicationForm application={applicationState ?? {}} />
+        <ApplicationForm
+            application={applicationState}
+            requestPrice={onRequestPrice}
+        />
     )
 }

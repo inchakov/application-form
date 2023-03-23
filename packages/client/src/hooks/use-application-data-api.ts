@@ -19,7 +19,7 @@ const applicationDataApi: ApplicationData = {
         if (response.ok === false) {
             throw new Error(`Application creating failed: ${response.statusText}`);
         }
-        return response.json() as unknown as ApplicationUid;
+        return await response.json() as ApplicationUid;
     },
 
     getApplication: async (applicationId: string): Promise<PartialApplication> => {
@@ -27,7 +27,7 @@ const applicationDataApi: ApplicationData = {
         if (response.ok === false) {
             throw new Error(`Application load failed: ${response.statusText}`);
         }
-        return response.json() as unknown as PartialApplication;
+        return await response.json() as PartialApplication;
     },
 
     saveApplication: async (applicationId: string, data: PartialApplication): Promise<void> => {

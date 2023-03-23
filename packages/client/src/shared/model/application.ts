@@ -15,8 +15,12 @@ export const ApplicationSchema = Type.Intersect([
     AddressSchema,
     Type.Object({
         vehicles: Type.Array(VehicleSchema, { minItems: 1, maxItems: MaxVehicles }),
-        additionalPeople: Type.Array(AdditionalPersonSchema, { minItems: 0, maxItems: MaxPeople }),
-    })
+    }),
+    Type.Object({
+        additionalPeople: Type.Optional(
+            Type.Array(AdditionalPersonSchema, { minItems: 0, maxItems: MaxPeople })
+        )
+    }),
 ])
 
 export type PartialApplication = Static<typeof PartialApplicationSchema>;
@@ -27,11 +31,9 @@ export const PartialApplicationSchema = Type.Partial(
         Type.Object({
             vehicles: Type.Array(Type.Partial(VehicleSchema), { minItems: 1, maxItems: MaxVehicles }),
         }),
-        Type.Partial(
-            Type.Object({
-                additionalPeople: Type.Array(Type.Partial(AdditionalPersonSchema), { minItems: 0, maxItems: MaxPeople }),
-            }
-        ))
+        Type.Optional(Type.Object({
+            additionalPeople: Type.Array(Type.Partial(AdditionalPersonSchema), { minItems: 0, maxItems: MaxPeople }),
+        }))
     ])
 )
 

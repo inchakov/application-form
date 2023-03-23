@@ -7,7 +7,7 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import { UseFormReturn, Controller } from "react-hook-form";
 import { Makers, Models } from "../../data/cars";
 import { MaxVehicles, PartialApplication } from "../../shared/model/application";
-import { MinVehicleYear, VinPattern } from "../../shared/model/vehicle";
+import { MinVehicleYear, VinMaxLength, VinPattern } from "../../shared/model/vehicle";
 
 export default function ApplicationVehicles(
     props: UseFormReturn<PartialApplication>
@@ -36,11 +36,13 @@ export default function ApplicationVehicles(
         setValue('vehicles', vehicles);
     }, [getValues, setValue])
 
+    console.log(errors);
+
     return (
         <React.Fragment>
             {vehicles.map((vehicle, index) => (
                 <React.Fragment key={index}>
-                    
+
                     <hr className="application-section" />
 
                     <Row>
@@ -48,7 +50,7 @@ export default function ApplicationVehicles(
                             <h2>Vehicle {index + 1}</h2>
                         </Col>
                         <Col xs='auto'>
-                            { index > 0 &&
+                            {index > 0 &&
                                 <Button variant='outline-danger' onClick={() => removeVehicle(index)}>Remove</Button>
                             }
                         </Col>
@@ -58,17 +60,17 @@ export default function ApplicationVehicles(
                         <Form.Control
                             type='text'
                             placeholder='4Y1SL65848Z411439'
-                            maxLength={17}
+                            maxLength={VinMaxLength}
                             {...register(`vehicles.${index}.vin`, {
                                 required: 'VIN is required',
                                 pattern: {
                                     value: VinPattern,
-                                    message: 'VIN must be 17 characters long'
+                                    message: 'VIN example: 4Y1SL65848Z411439'
                                 }
                             })}
                             isInvalid={!!errors.vehicles?.[index]?.vin?.message}
                         />
-                        <Form.Control.Feedback type='invalid'>{!!errors.vehicles?.[index]?.vin?.message}</Form.Control.Feedback>
+                        <Form.Control.Feedback type='invalid'>{errors.vehicles?.[index]?.vin?.message}</Form.Control.Feedback>
                     </Form.Group>
 
                     <Row>
@@ -77,22 +79,22 @@ export default function ApplicationVehicles(
                                 <Form.Label>Year</Form.Label>
                                 <Form.Select
                                     isInvalid={!!errors.vehicles?.[index]?.year}
-                                    {...register(`vehicles.${index}.year`, { required: true })}
+                                    {...register(`vehicles.${index}.year`, { required: 'Year is required' })}
                                 >
                                     <option value=''>Year...</option>
                                     {years.map((year) => (<option key={year} value={year}>{year}</option>))}
                                 </Form.Select>
-                                <Form.Control.Feedback type='invalid'>{!!errors.vehicles?.[index]?.year?.message}</Form.Control.Feedback>
+                                <Form.Control.Feedback type='invalid'>{errors.vehicles?.[index]?.year?.message}</Form.Control.Feedback>
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group controlId={`make${index}`}>
-                                <Form.Label>Make</Form.Label>
-                                <Controller
-                                    control={control}
-                                    name={`vehicles.${index}.make`}
-                                    rules={{ required: true }}
-                                    render={({ field }) => (
+                            <Controller
+                                control={control}
+                                name={`vehicles.${index}.make`}
+                                rules={{ required: 'Make is required' }}
+                                render={({ field }) => (
+                                    <Form.Group controlId={`make${index}`}>
+                                        <Form.Label>Make</Form.Label>
                                         <Typeahead
                                             id={`make-input-${index}`}
                                             {...field}
@@ -100,19 +102,19 @@ export default function ApplicationVehicles(
                                             placeholder='Chevrolet'
                                             options={Makers}
                                         />
-                                    )}
-                                />
-                                <Form.Control.Feedback type='invalid'>{!!errors.vehicles?.[index]?.make?.message}</Form.Control.Feedback>
-                            </Form.Group>
+                                        <Form.Control.Feedback type='invalid'>{errors.vehicles?.[index]?.make?.message}</Form.Control.Feedback>
+                                    </Form.Group>
+                                )}
+                            />
                         </Col>
                         <Col>
-                            <Form.Group controlId={`model${index}`}>
-                                <Form.Label>Model</Form.Label>
-                                <Controller
-                                    control={control}
-                                    name={`vehicles.${index}.model`}
-                                    rules={{ required: true }}
-                                    render={({ field }) => (
+                            <Controller
+                                control={control}
+                                name={`vehicles.${index}.model`}
+                                rules={{ required: 'Model is required' }}
+                                render={({ field }) => (
+                                    <Form.Group controlId={`model${index}`}>
+                                        <Form.Label>Model</Form.Label>
                                         <Typeahead
                                             id={`model-input-${index}`}
                                             {...field}
@@ -120,26 +122,27 @@ export default function ApplicationVehicles(
                                             placeholder='Camaro'
                                             options={(Models[vehicle.make!] ?? [])}
                                         />
-                                    )}
-                                />
-                                <Form.Control.Feedback type='invalid'>{!!errors.vehicles?.[index]?.model?.message}</Form.Control.Feedback>
-                            </Form.Group>
+                                        <Form.Control.Feedback type='invalid'>{errors.vehicles?.[index]?.model?.message}</Form.Control.Feedback>
+                                    </Form.Group>
+                                )}
+                            />
                         </Col>
                     </Row>
-                    
+
                 </React.Fragment>
-            ))}
-            
+            ))
+            }
+
             <div className="add-vehicle-button">
                 <Button
                     disabled={vehicles.length >= MaxVehicles}
                     variant='outline-secondary'
                     onClick={addVehicle}
                 >Add Vehicle</Button>
-                <br/>
+                <br />
                 <Form.Text>Max vehicles count: {MaxVehicles}</Form.Text>
             </div>
 
-        </React.Fragment>
+        </React.Fragment >
     )
 }

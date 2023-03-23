@@ -4,12 +4,13 @@ import Col from "react-bootstrap/esm/Col";
 import Form from "react-bootstrap/esm/Form";
 import Row from "react-bootstrap/esm/Row";
 import { UseFormReturn } from "react-hook-form";
-import { MaxPeople, MinDriverAge, PartialApplication } from "../../shared/model/application";
+import { getMinDateOfBirth, MaxPeople, MinDriverAge, PartialApplication } from "../../shared/model/application";
 
 export default function ApplicationDrivers(
-    props: UseFormReturn<PartialApplication> & { maxDateOfBirth: Date }
+    props: UseFormReturn<PartialApplication>
 ) {
-    const { maxDateOfBirth, register, setValue, getValues, formState: { errors }, watch } = props;
+    const { register, setValue, getValues, formState: { errors }, watch } = props;
+    const maxDateOfBirth = getMinDateOfBirth();
 
     const drivers = watch('additionalPeople') ?? [];
 
