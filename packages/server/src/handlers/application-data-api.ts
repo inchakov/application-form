@@ -22,8 +22,8 @@ export const applicationDataApi: FastifyPluginAsync = async (server) => {
     }, async (request, reply) => {
         const application: ApplicationUid = await createApplication(request.body)
         const response: ApplicationRoute = {
-            uid: application.applicationUid,
-            uri: `${Config.root}/api/application/${application.applicationUid}`
+            applicationUid: application.applicationUid,
+            resumeUrl: `${Config.root}/api/application/${application.applicationUid}`
         }
         return response
     })

@@ -1,12 +1,19 @@
 import './App.css';
 import Container from 'react-bootstrap/Container';
-import ApplicationForm from './ApplicationForm';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ApplicationContainer from '../containers/ApplicationContainer';
+import StartApplicationContainer from '../containers/StartApplicationContainer';
 
 function App() {
 
   return (
     <Container className='application-container'>
-      <ApplicationForm applicationUid='e8f7d574-5015-41bb-abb0-1e5cb90b071d' />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/application/:applicationUid' element={<ApplicationContainer />} />
+          <Route path='*' element={<StartApplicationContainer />} />
+        </Routes>
+      </BrowserRouter>
     </Container>
   );
 }
