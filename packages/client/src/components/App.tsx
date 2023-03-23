@@ -1,6 +1,6 @@
 import './App.css';
 import Container from 'react-bootstrap/Container';
-import ApplicationForm from './application/ApplicationForm';
+import ApplicationForm from './ApplicationForm';
 
 function App() {
 

@@ -30,7 +30,6 @@ export default function ApplicationForm(props: ApplicationUid) {
     useEffect(() => {
         getApplication(applicationUid)
             .then(application => {
-                console.log(application)
                 reset(application)
             })
             .catch(e => console.error(e))
@@ -38,7 +37,6 @@ export default function ApplicationForm(props: ApplicationUid) {
 
     const onSubmit = useCallback(async (data: PartialApplication) => {
         try {
-            console.log(data)
             const results = await calculatePrice(data as Application)
             console.log(results)
         } catch (error) {
