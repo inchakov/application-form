@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm";
 import { useToastContext } from "../components/ToastContextProvider";
 import { useApplicationDataApi } from "../hooks/use-application-data-api";
+import getErrorMessage from "../shared/getErrorMessage";
 import { PartialApplication } from "../shared/model/application";
 import { ApplicationUid } from "../shared/model/application-uid";
 
@@ -14,7 +15,7 @@ export default function ApplicationContainer() {
 
     const { getApplication } = useApplicationDataApi();
     const [applicationState, setApplication] = useState<PartialApplication>({})
-    
+
     const { showToast } = useToastContext()
 
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function ApplicationContainer() {
                     setApplication(application)
                 } catch (e) {
                     console.error(e);
-                    showToast({ header: 'Error', text: 'Application load failed', bg: 'danger' })
+                    showToast({ header: 'Error', text: getErrorMessage(e), bg: 'danger' })
                     navigate('/');
                 }
             }

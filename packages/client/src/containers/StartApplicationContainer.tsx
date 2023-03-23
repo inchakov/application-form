@@ -4,6 +4,7 @@ import Container from "react-bootstrap/esm/Container";
 import { useNavigate } from "react-router-dom";
 import { useToastContext } from "../components/ToastContextProvider";
 import { useApplicationDataApi } from "../hooks/use-application-data-api";
+import getErrorMessage from "../shared/getErrorMessage";
 import './StartApplicationContainer.css'
 
 
@@ -22,7 +23,7 @@ export default function StartApplicationContainer() {
             })
             .catch(e => {
                 console.error(e)
-                showToast({ header: 'Error', text: 'Something went wrang', bg: 'danger' })
+                showToast({ header: 'Error', text: getErrorMessage(e), bg: 'danger' })
             })
             .finally(() => setStarting(false))
     }, [createApplication, navigate, showToast])

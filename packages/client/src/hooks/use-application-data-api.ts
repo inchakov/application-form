@@ -16,6 +16,9 @@ const applicationDataApi: ApplicationData = {
             },
             body: JSON.stringify(initialData),
         });
+        if (response.ok === false) {
+            throw new Error(`Application creating failed: ${response.statusText}`);
+        }
         return response.json() as unknown as ApplicationUid;
     },
 
@@ -28,12 +31,15 @@ const applicationDataApi: ApplicationData = {
     },
 
     saveApplication: async (applicationId: string, data: PartialApplication): Promise<void> => {
-        await fetch(`/api/application/${applicationId}`, {
+        const response = await fetch(`/api/application/${applicationId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
         });
+        if (response.ok === false) {
+            throw new Error(`Application saving failed: ${response.statusText}`);
+        }
     }
 } as const
