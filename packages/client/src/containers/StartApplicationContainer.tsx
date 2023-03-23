@@ -2,13 +2,17 @@ import { useCallback, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 import { useNavigate } from "react-router-dom";
+import { useToastContext } from "../components/ToastContextProvider";
 import { useApplicationDataApi } from "../hooks/use-application-data-api";
+import './StartApplicationContainer.css'
+
 
 export default function StartApplicationContainer() {
 
     const navigate = useNavigate();
     const { createApplication } = useApplicationDataApi();
     const [isStarting, setStarting] = useState(false)
+    const { showToast } = useToastContext()
 
     const startApplication = useCallback(() => {
         setStarting(true);
@@ -16,20 +20,21 @@ export default function StartApplicationContainer() {
             .then((res) => {
                 navigate(`/application/${res.applicationUid}`)
             })
-            .catch(e => console.error(e))
+            .catch(e => {
+                console.error(e)
+                showToast({ header: 'Error', text: 'Something went wrang', bg: 'danger' })
+            })
             .finally(() => setStarting(false))
-    }, [createApplication, navigate])
+    }, [createApplication, navigate, showToast])
 
     return (
-        <Container>
-            <div className='d-grid'>
-                <Button
-                    variant='primary'
-                    size='lg'
-                    disabled={isStarting}
-                    onClick={startApplication}
-                >{isStarting ? 'Starting...' : 'Start Application'}</Button>
-            </div>
-        </Container>
+        <div className='d-grid start-button-container'>
+            <Button
+                variant='primary'
+                size='lg'
+                disabled={isStarting}
+                onClick={startApplication}
+            >{isStarting ? 'Starting...' : 'Start Application'}</Button>
+        </div>
     )
 }
