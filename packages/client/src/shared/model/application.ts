@@ -4,7 +4,7 @@ import { AddressSchema } from "./address";
 import { VehicleSchema } from "./vehicle";
 import { AdditionalPersonSchema } from "./additional-person";
 
-
+export const MinDriverAge = 16;
 export const MaxVehicles = 3;
 export const MaxPeople = 3;
 

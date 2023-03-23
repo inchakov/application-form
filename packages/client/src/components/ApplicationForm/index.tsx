@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/esm/Form';
 import { useForm } from 'react-hook-form';
-import { Application, PartialApplication } from '../../shared/model/application';
+import { Application, MinDriverAge, PartialApplication } from '../../shared/model/application';
 import Button from 'react-bootstrap/Button';
 import ApplicationPerson from './ApplicationPerson';
 import ApplicationAddress from './ApplicationAddress';
@@ -31,7 +31,7 @@ export default function ApplicationForm(props: ApplicationFormProps) {
     }, [onSubmit])
 
     const date = new Date()
-    const maxDateOfBirth = new Date(date.getFullYear() - 16, date.getMonth(), date.getDate())
+    const maxDateOfBirth = new Date(date.getFullYear() - MinDriverAge, date.getMonth(), date.getDate())
 
     return (
         <Form onSubmit={handleSubmit(submitForm)}>

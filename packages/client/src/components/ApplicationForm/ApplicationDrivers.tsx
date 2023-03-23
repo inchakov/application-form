@@ -4,7 +4,7 @@ import Col from "react-bootstrap/esm/Col";
 import Form from "react-bootstrap/esm/Form";
 import Row from "react-bootstrap/esm/Row";
 import { UseFormReturn } from "react-hook-form";
-import { MaxPeople, PartialApplication } from "../../shared/model/application";
+import { MaxPeople, MinDriverAge, PartialApplication } from "../../shared/model/application";
 
 export default function ApplicationDrivers(
     props: UseFormReturn<PartialApplication> & { maxDateOfBirth: Date }
@@ -68,7 +68,13 @@ export default function ApplicationDrivers(
                             type='Date'
                             max={maxDateOfBirth.toISOString().split('T')[0]}
                             isInvalid={!!errors.additionalPeople?.[index]?.dateOfBirth}
-                            {...register(`additionalPeople.${index}.dateOfBirth`, { required: 'Date of birth is required' })}
+                            {...register(`additionalPeople.${index}.dateOfBirth`, {
+                                required: 'Date of birth is required',
+                                max: {
+                                    value: maxDateOfBirth.toISOString().split('T')[0],
+                                    message: `Must be at least ${MinDriverAge} years old to apply`
+                                }
+                            })}
                         />
                         <Form.Control.Feedback type='invalid'>{errors.additionalPeople?.[index]?.dateOfBirth?.message}</Form.Control.Feedback>
                     </Form.Group>
