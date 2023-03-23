@@ -6,7 +6,7 @@ import { AdditionalPersonSchema } from "./additional-person";
 
 export const MinDriverAge = 16;
 export const MaxVehicles = 3;
-export const MaxPeople = 3;
+export const MaxPeople = 5;
 
 
 export type Application = Static<typeof ApplicationSchema>;
@@ -34,3 +34,9 @@ export const PartialApplicationSchema = Type.Partial(
         ))
     ])
 )
+
+export function getMinDateOfBirth() {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - MinDriverAge);
+    return date;
+}

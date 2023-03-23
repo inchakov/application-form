@@ -5,18 +5,19 @@ import Button from 'react-bootstrap/Button';
 import ApplicationPerson from './ApplicationPerson';
 import ApplicationAddress from './ApplicationAddress';
 import ApplicationVehicles from './ApplicationVehicles';
-import './ApplicationForm.css';
 import ApplicationDrivers from './ApplicationDrivers';
 import { useCallback } from 'react';
+import { ApplicationPrice } from '../../shared/model/application-price';
+import './ApplicationForm.css';
 
 export interface ApplicationFormProps {
     application: PartialApplication
-    onSubmit?: (application: Application) => void
+    requestPrice?: (application: Application) => Promise<ApplicationPrice>
 }
 
 export default function ApplicationForm(props: ApplicationFormProps) {
     
-    const { application, onSubmit } = props
+    const { application, requestPrice } = props
 
     const form = useForm<PartialApplication>({
         values: application
@@ -24,17 +25,17 @@ export default function ApplicationForm(props: ApplicationFormProps) {
 
     const { handleSubmit } = form;
 
-    const submitForm = useCallback(async (data: PartialApplication) => {
-        if(onSubmit) {
-            onSubmit(data as Application)
+    const onRequestPrice = useCallback(async (data: PartialApplication) => {
+        if (requestPrice) {
+            requestPrice(data as Application)
         }
-    }, [onSubmit])
+    }, [requestPrice])
 
     const date = new Date()
     const maxDateOfBirth = new Date(date.getFullYear() - MinDriverAge, date.getMonth(), date.getDate())
 
     return (
-        <Form onSubmit={handleSubmit(submitForm)}>
+        <Form onSubmit={handleSubmit(onRequestPrice)}>
             <ApplicationPerson maxDateOfBirth={maxDateOfBirth} {...form}/>
             <ApplicationAddress {...form} />
             <ApplicationDrivers maxDateOfBirth={maxDateOfBirth} {...form} />

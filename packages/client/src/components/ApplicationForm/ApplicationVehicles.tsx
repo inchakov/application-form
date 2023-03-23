@@ -82,6 +82,7 @@ export default function ApplicationVehicles(
                                     <option value=''>Year...</option>
                                     {years.map((year) => (<option key={year} value={year}>{year}</option>))}
                                 </Form.Select>
+                                <Form.Control.Feedback type='invalid'>{!!errors.vehicles?.[index]?.year?.message}</Form.Control.Feedback>
                             </Form.Group>
                         </Col>
                         <Col>
@@ -101,6 +102,7 @@ export default function ApplicationVehicles(
                                         />
                                     )}
                                 />
+                                <Form.Control.Feedback type='invalid'>{!!errors.vehicles?.[index]?.make?.message}</Form.Control.Feedback>
                             </Form.Group>
                         </Col>
                         <Col>
@@ -120,6 +122,7 @@ export default function ApplicationVehicles(
                                         />
                                     )}
                                 />
+                                <Form.Control.Feedback type='invalid'>{!!errors.vehicles?.[index]?.model?.message}</Form.Control.Feedback>
                             </Form.Group>
                         </Col>
                     </Row>
