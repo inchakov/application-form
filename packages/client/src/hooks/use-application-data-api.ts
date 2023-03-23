@@ -21,6 +21,9 @@ const applicationDataApi: ApplicationData = {
 
     getApplication: async (applicationId: string): Promise<PartialApplication> => {
         const response = await fetch(`/api/application/${applicationId}`);
+        if (response.ok === false) {
+            throw new Error(`Application load failed: ${response.statusText}`);
+        }
         return response.json() as unknown as PartialApplication;
     },
 
@@ -33,4 +36,4 @@ const applicationDataApi: ApplicationData = {
             body: JSON.stringify(data),
         });
     }
-}
+} as const

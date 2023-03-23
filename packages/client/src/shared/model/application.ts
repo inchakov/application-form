@@ -24,9 +24,11 @@ export const PartialApplicationSchema = Type.Partial(
     Type.Intersect([
         PersonSchema,
         AddressSchema,
+        Type.Object({
+            vehicles: Type.Array(Type.Partial(VehicleSchema), { minItems: 1, maxItems: MaxVehicles }),
+        }),
         Type.Partial(
             Type.Object({
-                vehicles: Type.Array(Type.Partial(VehicleSchema), { minItems: 1, maxItems: MaxVehicles }),
                 additionalPeople: Type.Array(Type.Partial(AdditionalPersonSchema), { minItems: 0, maxItems: MaxPeople }),
             }
         ))
