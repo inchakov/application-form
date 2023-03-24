@@ -12,6 +12,7 @@ export interface ToastOptions {
     text: string
     header?: string
     bg?: Variant
+    milliseconds?: number
 }
 
 export interface ToastContextProviderProps {
@@ -29,6 +30,11 @@ export default function ToastContextProvider(props: ToastContextProviderProps) {
     const contextValue: ToastContextProps = useMemo(() => ({
         showToast: (options: ToastOptions) => {
             setOptions(options)
+            if (options.milliseconds !== undefined) {
+                setTimeout(() => {
+                    setOptions(null)
+                }, options.milliseconds)
+            }
         }
     }), [])
 

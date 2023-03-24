@@ -1,4 +1,6 @@
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
+import Spinner from "react-bootstrap/esm/Spinner";
 import { useNavigate, useParams } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm";
 import { useToastContext } from "../components/ToastContextProvider";
@@ -14,9 +16,9 @@ export default function ApplicationContainer() {
     const { applicationUid } = useParams<ApplicationUid>();
     const navigate = useNavigate();
 
-    const { getApplication } = useApplicationDataApi();
+    const { getApplication, saveApplication } = useApplicationDataApi();
     const { calculatePrice } = useApplicationCalculatorApi();
-    const [applicationState, setApplication] = useState<PartialApplication>({})
+    const [applicationState, setApplication] = useState<PartialApplication | undefined>()
 
     const { showToast } = useToastContext()
 
@@ -47,10 +49,33 @@ export default function ApplicationContainer() {
         return price
     }, [calculatePrice])
 
+    const onSave = useCallback(async (application: PartialApplication) => {
+        if (applicationUid) {
+            try {
+                showToast({ header: 'Saving', text: 'Saving application...', bg: 'info' });
+                await saveApplication(applicationUid, application);
+                showToast({ header: 'Saved', text: 'Application saved', bg: 'info', milliseconds: 3000 });
+            } catch (e) {
+                console.error(e);
+                showToast({ header: 'Error', text: getErrorMessage(e), bg: 'danger' })
+            }
+        }
+    }, [applicationUid, saveApplication, showToast])
+
     return (
-        <ApplicationForm
-            application={applicationState}
-            requestPrice={onRequestPrice}
-        />
+        <React.Fragment>
+            {!applicationState &&
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            }
+            { applicationState &&
+                <ApplicationForm
+                    application={applicationState}
+                    requestPrice={onRequestPrice}
+                    onSave={onSave}
+                />
+            }
+        </React.Fragment>
     )
 }

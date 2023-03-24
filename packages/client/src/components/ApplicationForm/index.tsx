@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/esm/Form';
 import { useForm } from 'react-hook-form';
-import { Application, MinDriverAge, PartialApplication } from '../../shared/model/application';
+import { Application, PartialApplication } from '../../shared/model/application';
 import Button from 'react-bootstrap/Button';
 import ApplicationPerson from './ApplicationPerson';
 import ApplicationAddress from './ApplicationAddress';
@@ -11,10 +11,12 @@ import { ApplicationPrice } from '../../shared/model/application-price';
 import './ApplicationForm.css';
 import getErrorMessage from '../../shared/getErrorMessage';
 import { useToastContext } from '../ToastContextProvider';
+import ApplicationFormAutoSave from './ApplicationFormAutoSave';
 
 export interface ApplicationFormProps {
     application: PartialApplication
-    requestPrice?: (application: Application) => Promise<ApplicationPrice>
+    requestPrice: (application: Application) => Promise<ApplicationPrice>
+    onSave: (application: PartialApplication) => Promise<void>
 }
 
 export default function ApplicationForm(props: ApplicationFormProps) {
@@ -48,6 +50,8 @@ export default function ApplicationForm(props: ApplicationFormProps) {
 
     return (
         <Form onSubmit={handleSubmit(onRequestPrice)}>
+
+            <ApplicationFormAutoSave {...form} onSave={props.onSave} />
             
             <ApplicationPerson {...form} />
             <ApplicationAddress {...form} />
