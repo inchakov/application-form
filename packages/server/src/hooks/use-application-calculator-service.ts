@@ -11,6 +11,9 @@ const applicationCalculatorService: ApplicationCalculator = {
 
     calculatePrice: async (application) => {
 
+        // application validate by json schema.
+        // Here we just need to validate things that cannot be validate by schema: age, etc.
+        
         const minDateOfBirth = getMinDateOfBirth()
 
         if (new Date(application.dateOfBirth) > minDateOfBirth) {

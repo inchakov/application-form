@@ -25,6 +25,12 @@ export default function ApplicationContainer() {
             if (applicationUid) {
                 try {
                     const application = await getApplication(applicationUid)
+                    if (!application.vehicles) {
+                        application.vehicles = [{}];
+                    }
+                    if (application.vehicles.length === 0) {
+                        application.vehicles.push({});
+                    }
                     setApplication(application)
                 } catch (e) {
                     console.error(e);
