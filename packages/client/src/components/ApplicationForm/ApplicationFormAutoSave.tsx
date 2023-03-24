@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useAutosave } from "react-autosave";
+import Form from "react-bootstrap/esm/Form";
 import { UseFormReturn } from "react-hook-form";
 import { PartialApplication } from "../../shared/model/application";
 
@@ -13,7 +14,7 @@ export default function ApplicationFormAutoSave(
 ) {
     const { watch, onSave } = props;
     const application = watch();
-    const lastSavedApplication = useRef<string | undefined>(undefined);
+    const lastSavedApplication = useRef<string | undefined>(JSON.stringify(application));
 
     useAutosave({
         interval: 4000,
@@ -24,14 +25,16 @@ export default function ApplicationFormAutoSave(
             
             lastSavedApplication.current = cleanAppString;
             
-            if (currentAppString !== undefined && currentAppString !== cleanAppString) {
+            if (currentAppString !== cleanAppString) {
                 onSave(cleanApp);
             }
         }
     })
 
     return (
-        <React.Fragment></React.Fragment>
+        <React.Fragment>
+            <Form.Text>Your changes are saved automatically — use the page link to return to work.</Form.Text>
+        </React.Fragment>
     )
 }
 

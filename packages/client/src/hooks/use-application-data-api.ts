@@ -32,7 +32,6 @@ const applicationDataApi: ApplicationData = {
     },
 
     saveApplication: async (applicationId: string, data: PartialApplication): Promise<void> => {
-        console.log("Saving application", applicationId, data);
         const response = await fetch(`/api/application/${applicationId}`, {
             method: "PUT",
             headers: {
