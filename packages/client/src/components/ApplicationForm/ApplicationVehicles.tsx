@@ -36,8 +36,6 @@ export default function ApplicationVehicles(
         setValue('vehicles', vehicles);
     }, [getValues, setValue])
 
-    console.log(errors);
-
     return (
         <React.Fragment>
             {vehicles.map((vehicle, index) => (
