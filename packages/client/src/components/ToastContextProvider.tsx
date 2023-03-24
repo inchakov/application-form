@@ -40,7 +40,7 @@ export default function ToastContextProvider(props: ToastContextProviderProps) {
 
     return (
         <ToastContext.Provider value={contextValue}>
-            <ToastContainer position="top-center">
+            <ToastContainer position="top-center" className="position-fixed">
                 <Toast
                     bg={options?.bg}
                     show={options !== null}
