@@ -57,6 +57,6 @@ npm run build
 
 echo 
 echo Run Server...
-echo echo -----------------------------
+echo -----------------------------
 npm run start
 ```
