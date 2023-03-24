@@ -46,10 +46,9 @@ export default function ApplicationDrivers(
                         <Form.Control
                             type='text'
                             placeholder='John'
-                            {...register(`additionalPeople.${index}.firstName`, { required: 'First name is required' })}
+                            {...register(`additionalPeople.${index}.firstName`, { required: true })}
                             isInvalid={!!errors.additionalPeople?.[index]?.firstName}
                         />
-                        <Form.Control.Feedback type='invalid'>{errors.additionalPeople?.[index]?.firstName?.message}</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className='application-input-group' controlId={`driver${index}lastName`}>
@@ -57,10 +56,9 @@ export default function ApplicationDrivers(
                         <Form.Control
                             type='text'
                             placeholder='Doe'
-                            {...register(`additionalPeople.${index}.lastName`, { required: 'Last name is required' })}
+                            {...register(`additionalPeople.${index}.lastName`, { required: true })}
                             isInvalid={!!errors.additionalPeople?.[index]?.lastName}
                         />
-                        <Form.Control.Feedback type='invalid'>{errors.additionalPeople?.[index]?.lastName?.message}</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className='application-input-group' controlId={`driver${index}dateOfBirth`}>
@@ -70,7 +68,7 @@ export default function ApplicationDrivers(
                             max={maxDateOfBirth.toISOString().split('T')[0]}
                             isInvalid={!!errors.additionalPeople?.[index]?.dateOfBirth}
                             {...register(`additionalPeople.${index}.dateOfBirth`, {
-                                required: 'Date of birth is required',
+                                required: true,
                                 max: {
                                     value: maxDateOfBirth.toISOString().split('T')[0],
                                     message: `Must be at least ${MinDriverAge} years old to apply`
@@ -84,7 +82,7 @@ export default function ApplicationDrivers(
                         <Form.Label>Relationship</Form.Label>
                         <Form.Select
                             isInvalid={!!errors.additionalPeople?.[index]?.relationship?.message}
-                            {...register(`additionalPeople.${index}.relationship`, { required: 'Relationship is required' })}
+                            {...register(`additionalPeople.${index}.relationship`, { required: true })}
                         >
                             <option value=''>Select...</option>
                             <option value='spouse'>Spouse</option>
@@ -93,7 +91,6 @@ export default function ApplicationDrivers(
                             <option value='friend'>Friend</option>
                             <option value='other'>Other</option>
                         </Form.Select>
-                        <Form.Control.Feedback type='invalid'>{errors.additionalPeople?.[index]?.relationship?.message}</Form.Control.Feedback>
                     </Form.Group>
 
                 </React.Fragment>

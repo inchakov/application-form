@@ -8,7 +8,7 @@ export default function ApplicationPerson(
 ) {
     const { register, formState: { errors } } = props;
     const maxDateOfBirth = getMinDateOfBirth();
-    
+
     return (
         <React.Fragment>
             <h2 className="application-section">Personal Information</h2>
@@ -18,10 +18,9 @@ export default function ApplicationPerson(
                 <Form.Control
                     type='text'
                     placeholder='John'
-                    {...register('firstName', { required: 'First name is required' })}
-                    isInvalid={!!errors.firstName?.message}
+                    {...register('firstName', { required: true })}
+                    isInvalid={!!errors.firstName}
                 />
-                <Form.Control.Feedback type='invalid'>{errors.firstName?.message}</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className='application-input-group' controlId='lastName'>
@@ -29,10 +28,9 @@ export default function ApplicationPerson(
                 <Form.Control
                     type='text'
                     placeholder='Doe'
-                    {...register('lastName', { required: 'Last name is required' })}
+                    {...register('lastName', { required: true })}
                     isInvalid={!!errors.lastName}
                 />
-                <Form.Control.Feedback type='invalid'>{errors.lastName?.message}</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className='application-input-group' controlId='dateOfBirth'>
@@ -42,7 +40,7 @@ export default function ApplicationPerson(
                     max={maxDateOfBirth.toISOString().split('T')[0]}
                     isInvalid={!!errors.dateOfBirth}
                     {...register('dateOfBirth', {
-                        required: 'Date of birth is required',
+                        required: true,
                         max: {
                             value: maxDateOfBirth.toISOString().split('T')[0],
                             message: `Must be at least ${MinDriverAge} years old to apply`

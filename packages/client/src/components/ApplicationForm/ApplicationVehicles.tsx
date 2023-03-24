@@ -62,13 +62,13 @@ export default function ApplicationVehicles(
                             placeholder='4Y1SL65848Z411439'
                             maxLength={VinMaxLength}
                             {...register(`vehicles.${index}.vin`, {
-                                required: 'VIN is required',
+                                required: true,
                                 pattern: {
                                     value: VinPattern,
                                     message: 'VIN example: 4Y1SL65848Z411439'
                                 }
                             })}
-                            isInvalid={!!errors.vehicles?.[index]?.vin?.message}
+                            isInvalid={!!errors.vehicles?.[index]?.vin}
                         />
                         <Form.Control.Feedback type='invalid'>{errors.vehicles?.[index]?.vin?.message}</Form.Control.Feedback>
                     </Form.Group>
@@ -79,19 +79,18 @@ export default function ApplicationVehicles(
                                 <Form.Label>Year</Form.Label>
                                 <Form.Select
                                     isInvalid={!!errors.vehicles?.[index]?.year}
-                                    {...register(`vehicles.${index}.year`, { required: 'Year is required' })}
+                                    {...register(`vehicles.${index}.year`, { required: true })}
                                 >
                                     <option value=''>Year...</option>
                                     {years.map((year) => (<option key={year} value={year}>{year}</option>))}
                                 </Form.Select>
-                                <Form.Control.Feedback type='invalid'>{errors.vehicles?.[index]?.year?.message}</Form.Control.Feedback>
                             </Form.Group>
                         </Col>
                         <Col>
                             <Controller
                                 control={control}
                                 name={`vehicles.${index}.make`}
-                                rules={{ required: 'Make is required' }}
+                                rules={{ required: true }}
                                 render={({ field }) => (
                                     <Form.Group controlId={`make${index}`}>
                                         <Form.Label>Make</Form.Label>
@@ -102,7 +101,6 @@ export default function ApplicationVehicles(
                                             placeholder='Chevrolet'
                                             options={Makers}
                                         />
-                                        <Form.Control.Feedback type='invalid'>{errors.vehicles?.[index]?.make?.message}</Form.Control.Feedback>
                                     </Form.Group>
                                 )}
                             />
@@ -111,7 +109,7 @@ export default function ApplicationVehicles(
                             <Controller
                                 control={control}
                                 name={`vehicles.${index}.model`}
-                                rules={{ required: 'Model is required' }}
+                                rules={{ required: true }}
                                 render={({ field }) => (
                                     <Form.Group controlId={`model${index}`}>
                                         <Form.Label>Model</Form.Label>
@@ -122,7 +120,6 @@ export default function ApplicationVehicles(
                                             placeholder='Camaro'
                                             options={(Models[vehicle.make!] ?? [])}
                                         />
-                                        <Form.Control.Feedback type='invalid'>{errors.vehicles?.[index]?.model?.message}</Form.Control.Feedback>
                                     </Form.Group>
                                 )}
                             />
