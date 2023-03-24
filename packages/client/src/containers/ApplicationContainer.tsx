@@ -57,7 +57,7 @@ export default function ApplicationContainer() {
                 showToast({ header: 'Saved', text: 'Application saved', bg: 'info', milliseconds: 3000 });
             } catch (e) {
                 console.error(e);
-                showToast({ header: 'Error', text: getErrorMessage(e), bg: 'danger' })
+                showToast({ header: 'Error', text: "Saving error:" + getErrorMessage(e), bg: 'danger' })
             }
         }
     }, [applicationUid, saveApplication, showToast])

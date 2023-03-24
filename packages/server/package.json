@@ -1,11 +1,11 @@
 {
   "name": "hugo-challenge",
   "version": "1.0.0",
-  "main": "build/server/index.js",
+  "main": "build/server/src/index.js",
   "scripts": {
     "dev": "ts-node-dev src/",
-    "build": "tsc",
-    "start": "node build/server/index.js"
+    "build": "tsc && cp -r ../client/build/ build/server/src/client",
+    "start": "node build/server/src/index.js"
   },
   "author": "Aleksey Inchakov",
   "license": "ISC",

@@ -22,45 +22,41 @@ Client -> Handlers -> Services -> Repositories -> Database
 
 ### Install dependencies
 
-```bash
-npm install
-```
-
-
-### Run server
-
-```bash
-cd packages/server
-npm run dev
-```
-
 ### Run client
 ```bash
 cd packages/client
+npm install
 npm run start
+```
+
+### Run server
+```bash
+cd packages/server
+npm install
+npm run dev
 ```
 
 
 ## Build and Run
 
-### Install dependencies
 
 ```bash
-npm install
-```
-
-### Build client
-
-```bash
+echo 
+echo Build Client...
+echo -----------------------------
 cd packages/client
+npm install
 npm run build
-```
 
-### Build and run server
-
-```bash
-cd packages/server
+echo 
+echo Build Server...
+echo -----------------------------
+cd ../../packages/server
+npm install
 npm run build
+
+echo 
+echo Run Server...
+echo echo -----------------------------
 npm run start
 ```
-

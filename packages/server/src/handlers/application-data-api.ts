@@ -19,7 +19,7 @@ export const applicationDataApi: FastifyPluginAsync = async (server) => {
                 200: ApplicationRouteSchema
             }
         }
-    }, async (request, reply) => {
+    }, async (request) => {
         const application: ApplicationUid = await createApplication(request.body)
         const response: ApplicationRoute = {
             applicationUid: application.applicationUid,

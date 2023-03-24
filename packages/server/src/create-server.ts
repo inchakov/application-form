@@ -27,6 +27,9 @@ async function registerApiRoutings(server: FastifyInstance) {
 async function registerStaticRoutings(server: FastifyInstance) {
     await server.register(fastifyStatic, {
         prefix: '/',
-        root: path.join(__dirname, '../../client/build')
+        root: path.join(__dirname, 'client/')
+    });
+    server.get('/application/:applicationUid', async (_, reply) => {
+        await reply.sendFile('index.html');
     });
 }
