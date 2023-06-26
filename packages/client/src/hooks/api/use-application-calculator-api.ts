@@ -1,6 +1,6 @@
-import { ApplicationCalculator, useApplicationCalculator } from "../shared/hooks/use-application-calculator"
-import { ApplicationPrice } from "../shared/model/application-price";
-import { ErrorMessage } from "../shared/model/error-message";
+import { ApplicationCalculator, useApplicationCalculator } from "../../shared/hooks/use-application-calculator"
+import { ApplicationPrice } from "../../shared/model/application-price";
+import { ErrorMessage } from "../../shared/model/error-message";
 
 export const useApplicationCalculatorApi: useApplicationCalculator = () => {
     return applicationCalculatorApi

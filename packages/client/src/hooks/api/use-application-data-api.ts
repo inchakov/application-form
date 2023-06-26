@@ -1,7 +1,7 @@
-import { ApplicationData, useApplicationData } from "../shared/hooks/use-application-data";
-import { PartialApplication } from "../shared/model/application";
-import { ApplicationUid } from "../shared/model/application-uid";
-import { ErrorMessage } from "../shared/model/error-message";
+import { ApplicationData, useApplicationData } from "../../shared/hooks/use-application-data";
+import { PartialApplication } from "../../shared/model/application";
+import { ApplicationUid } from "../../shared/model/application-uid";
+import { ErrorMessage } from "../../shared/model/error-message";
 
 export const useApplicationDataApi: useApplicationData = () => {
     return applicationDataApi
